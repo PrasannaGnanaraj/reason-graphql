@@ -9,36 +9,30 @@ var Sidebar$ReactTemplate = require("./Sidebar.bs.js");
 var headerStyles = Css.style(/* :: */[
       Css.overflow(Css.hidden),
       /* :: */[
-        Css.backgroundColor(Css.dimgray),
+        Css.backgroundColor(Css.white),
         /* :: */[
-          Css.padding2(Css.px(20), Css.px(10)),
-          /* [] */0
+          Css.padding2(Css.rem(3.0), Css.rem(1.5)),
+          /* :: */[
+            Css.boxShadow(Css.px(0), Css.px(0), Css.rem(1.0), Css.rem(1.0), undefined, Css.rgba(53, 59, 72, 0.1)),
+            /* [] */0
+          ]
         ]
       ]
     ]);
 
 var headerAnchorStyle = Css.style(/* :: */[
-      Css.$$float(/* left */-944764921),
+      Css.color(Css.hex("576574")),
       /* :: */[
-        Css.color(Css.black),
+        Css.textAlign(Css.center),
         /* :: */[
-          Css.textAlign(Css.center),
+          Css.lineHeight(Css.px(25)),
           /* :: */[
-            Css.padding(Css.px(12)),
+            Css.borderRadius(Css.px(4)),
             /* :: */[
-              Css.lineHeight(Css.px(25)),
+              Css.textDecoration(Css.none),
               /* :: */[
-                Css.borderRadius(Css.px(4)),
-                /* :: */[
-                  Css.textDecoration(Css.none),
-                  /* :: */[
-                    Css.fontSize(Css.px(25)),
-                    /* :: */[
-                      Css.fontStyle(Css.oblique),
-                      /* [] */0
-                    ]
-                  ]
-                ]
+                Css.fontSize(Css.rem(2.0)),
+                /* [] */0
               ]
             ]
           ]

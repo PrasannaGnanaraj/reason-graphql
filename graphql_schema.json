@@ -186,21 +186,45 @@
               "name": "active",
               "description": "Whether this api is currently active",
               "args": [],
-              "type": { "kind": "SCALAR", "name": "Boolean", "ofType": null },
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              },
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
-              "name": "users",
-              "description": "The users that belong to this api",
+              "name": "addPermissions",
+              "description": "Whether permissions should be added to the token",
               "args": [],
               "type": {
-                "kind": "LIST",
+                "kind": "NON_NULL",
                 "name": null,
                 "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": { "kind": "OBJECT", "name": "User", "ofType": null }
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "addRoles",
+              "description": "Whether roles should be added to the token",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
                 }
               },
               "isDeprecated": false,
@@ -221,22 +245,6 @@
                     "name": "Permission",
                     "ofType": null
                   }
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "roles",
-              "description": "The roles defined for this api",
-              "args": [],
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": { "kind": "OBJECT", "name": "Role", "ofType": null }
                 }
               },
               "isDeprecated": false,
@@ -382,6 +390,16 @@
           "fields": null,
           "inputFields": [
             {
+              "name": "tenant",
+              "description": "Filter by tenant",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TenantWhereInput",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
               "name": "id",
               "description": "Filter by id",
               "type": {
@@ -412,6 +430,26 @@
               "defaultValue": null
             },
             {
+              "name": "adPermissions",
+              "description": "Filter by add permissions",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "BooleanComparison",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "addRoles",
+              "description": "Filter by add roles",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "BooleanComparison",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
               "name": "createdAt",
               "description": "Filter by creation time",
               "type": {
@@ -428,6 +466,48 @@
                 "kind": "INPUT_OBJECT",
                 "name": "TimeComparison",
                 "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "AND",
+              "description": "Additonal AND Filters",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ApiWhereInput",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "OR",
+              "description": "Additional OR Filters",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ApiWhereInput",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "NOT",
+              "description": "Additional NOT Filters",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ApiWhereInput",
+                  "ofType": null
+                }
               },
               "defaultValue": null
             }
@@ -534,13 +614,19 @@
           "fields": null,
           "inputFields": [
             {
-              "name": "id",
-              "description": "The unique identifier for the api. Cannot be changed",
+              "name": "appId",
+              "description": "The tenant this api belongs to",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
-                "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+                "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
               },
+              "defaultValue": null
+            },
+            {
+              "name": "id",
+              "description": "The unique identifier for the api. Cannot be changed",
+              "type": { "kind": "SCALAR", "name": "ID", "ofType": null },
               "defaultValue": null
             },
             {
@@ -556,6 +642,18 @@
             {
               "name": "active",
               "description": "Whether this api will be active after creation",
+              "type": { "kind": "SCALAR", "name": "Boolean", "ofType": null },
+              "defaultValue": null
+            },
+            {
+              "name": "addPermissions",
+              "description": "Whether permissions should be added to the token",
+              "type": { "kind": "SCALAR", "name": "Boolean", "ofType": null },
+              "defaultValue": null
+            },
+            {
+              "name": "addRoles",
+              "description": "Whether roles should be added to the token",
               "type": { "kind": "SCALAR", "name": "Boolean", "ofType": null },
               "defaultValue": null
             },
@@ -648,7 +746,7 @@
               "defaultValue": null
             },
             {
-              "name": "permision",
+              "name": "permission",
               "description": "The name of the permission. If defined takes precedence over the permissions field",
               "type": { "kind": "SCALAR", "name": "String", "ofType": null },
               "defaultValue": null
@@ -708,6 +806,37 @@
               "name": "description",
               "description": "The description for the role",
               "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "CreateTenantInput",
+          "description": "Model for creating a new api",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "id",
+              "description": "The unique identifier for the api. Cannot be changed",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "name",
+              "description": "The friendly name for the api",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              },
               "defaultValue": null
             }
           ],
@@ -1068,7 +1197,121 @@
                   "defaultValue": null
                 }
               ],
-              "type": { "kind": "OBJECT", "name": "User", "ofType": null },
+              "type": {
+                "kind": "OBJECT",
+                "name": "UserRolesResponse",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "removeUserRoles",
+              "description": "Adds the specified roles to the user",
+              "args": [
+                {
+                  "name": "data",
+                  "description": "",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "AddUserRoleInput",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "UserRolesResponse",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "createTenant",
+              "description": "Creates an api",
+              "args": [
+                {
+                  "name": "data",
+                  "description": "",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "CreateTenantInput",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": { "kind": "OBJECT", "name": "Tenant", "ofType": null }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "updateTenant",
+              "description": "Updates the specified api",
+              "args": [
+                {
+                  "name": "id",
+                  "description": "",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "data",
+                  "description": "",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "UpdateTenantInput",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": { "kind": "OBJECT", "name": "Tenant", "ofType": null }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "deleteTenant",
+              "description": "Deletes the specified api",
+              "args": [
+                {
+                  "name": "id",
+                  "description": "",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": { "kind": "OBJECT", "name": "Tenant", "ofType": null }
+              },
               "isDeprecated": false,
               "deprecationReason": null
             },
@@ -1246,9 +1489,36 @@
                   "name": "data",
                   "description": "",
                   "type": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "AddRolePermissionsInput",
-                    "ofType": null
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "AddRolePermissionsInput",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": { "kind": "OBJECT", "name": "Role", "ofType": null },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "removeRolePermissions",
+              "description": "Removes the specified roles to the user",
+              "args": [
+                {
+                  "name": "data",
+                  "description": "",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "AddRolePermissionsInput",
+                      "ofType": null
+                    }
                   },
                   "defaultValue": null
                 }
@@ -1293,16 +1563,6 @@
               "description": "Updates the specified api",
               "args": [
                 {
-                  "name": "id",
-                  "description": "",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
-                  },
-                  "defaultValue": null
-                },
-                {
                   "name": "data",
                   "description": "",
                   "type": {
@@ -1330,6 +1590,16 @@
               "description": "Deletes the specified api",
               "args": [
                 {
+                  "name": "appId",
+                  "description": "",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+                  },
+                  "defaultValue": null
+                },
+                {
                   "name": "id",
                   "description": "",
                   "type": {
@@ -1352,6 +1622,16 @@
               "name": "rotateKey",
               "description": "Rotates the private key used for signing the JWT",
               "args": [
+                {
+                  "name": "appId",
+                  "description": "",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+                  },
+                  "defaultValue": null
+                },
                 {
                   "name": "id",
                   "description": "",
@@ -1527,6 +1807,14 @@
               "type": { "kind": "OBJECT", "name": "Api", "ofType": null },
               "isDeprecated": false,
               "deprecationReason": null
+            },
+            {
+              "name": "apiName",
+              "description": "The name of the api",
+              "args": [],
+              "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+              "isDeprecated": false,
+              "deprecationReason": null
             }
           ],
           "inputFields": null,
@@ -1651,6 +1939,16 @@
           "description": "",
           "fields": null,
           "inputFields": [
+            {
+              "name": "role",
+              "description": "Filter by role",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "RoleWhereInput",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
             {
               "name": "api",
               "description": "Filter by api",
@@ -1940,6 +2238,190 @@
                 }
               ],
               "type": { "kind": "OBJECT", "name": "Role", "ofType": null },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "allTenantsConnection",
+              "description": "Queries for all apis in a paginated way. Need to be admin to execute this",
+              "args": [
+                {
+                  "name": "page",
+                  "description": "",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "PaginationInput",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "where",
+                  "description": "",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "TenantWhereInput",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "TenantPage",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "tenantsConnection",
+              "description": "Queries for all apis in a paginated way",
+              "args": [
+                {
+                  "name": "appId",
+                  "description": "",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "page",
+                  "description": "",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "PaginationInput",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "where",
+                  "description": "",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "TenantWhereInput",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "TenantPage",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "tenants",
+              "description": "Finds all apis that match the where criteria",
+              "args": [
+                {
+                  "name": "appId",
+                  "description": "",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "where",
+                  "description": "",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "TenantWhereInput",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "orderBy",
+                  "description": "",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "KeyValuePair",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "Tenant",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "tenant",
+              "description": "Finds the first api that matches the where criteria",
+              "args": [
+                {
+                  "name": "appId",
+                  "description": "",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "where",
+                  "description": "",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "TenantWhereInput",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": { "kind": "OBJECT", "name": "Tenant", "ofType": null },
               "isDeprecated": false,
               "deprecationReason": null
             },
@@ -2559,10 +3041,10 @@
               "deprecationReason": null
             },
             {
-              "name": "api",
-              "description": "The API this role belongs to",
+              "name": "tenant",
+              "description": "The Tenant this role belongs to",
               "args": [],
-              "type": { "kind": "OBJECT", "name": "Api", "ofType": null },
+              "type": { "kind": "OBJECT", "name": "Tenant", "ofType": null },
               "isDeprecated": false,
               "deprecationReason": null
             }
@@ -2686,11 +3168,21 @@
           "fields": null,
           "inputFields": [
             {
-              "name": "api",
+              "name": "user",
+              "description": "Filter by user",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "UserWhereInput",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "tenant",
               "description": "Filter by api",
               "type": {
                 "kind": "INPUT_OBJECT",
-                "name": "ApiWhereInput",
+                "name": "TenantWhereInput",
                 "ofType": null
               },
               "defaultValue": null
@@ -2708,6 +3200,16 @@
             {
               "name": "name",
               "description": "Filter by the name of the role",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TextComparison",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "description",
+              "description": "Filter by the description of the role",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "TextComparison",
@@ -2839,6 +3341,301 @@
           "description": "Built-in String",
           "fields": null,
           "inputFields": null,
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "Tenant",
+          "description": "A representation of an API on the server",
+          "fields": [
+            {
+              "name": "id",
+              "description": "The unique identifier for the tenant. Cannot be changed.",
+              "args": [],
+              "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "name",
+              "description": "A friendly name for the tenant",
+              "args": [],
+              "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "createdAt",
+              "description": "The date the api was created",
+              "args": [],
+              "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "updatedAt",
+              "description": "The date the api was updated",
+              "args": [],
+              "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "users",
+              "description": "The users that belong to this tenant",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "OBJECT", "name": "User", "ofType": null }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "apis",
+              "description": "The permissions defined for the tenant",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "OBJECT", "name": "Api", "ofType": null }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "roles",
+              "description": "The roles defined for this tenant",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "OBJECT", "name": "Role", "ofType": null }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "TenantPage",
+          "description": "A paginated list of Api entities",
+          "fields": [
+            {
+              "name": "content",
+              "description": "The list of authserver retrieved from the server",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Tenant",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "totalPages",
+              "description": "The number of total pages",
+              "args": [],
+              "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "totalElements",
+              "description": "The total amount of elements in this request",
+              "args": [],
+              "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "size",
+              "description": "The size of the current page",
+              "args": [],
+              "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "first",
+              "description": "Returns whether the current page is the first",
+              "args": [],
+              "type": { "kind": "SCALAR", "name": "Boolean", "ofType": null },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "last",
+              "description": "Returns whether the current page is the last",
+              "args": [],
+              "type": { "kind": "SCALAR", "name": "Boolean", "ofType": null },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "hasNext",
+              "description": "Returns if there is a next page",
+              "args": [],
+              "type": { "kind": "SCALAR", "name": "Boolean", "ofType": null },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "hasPrevious",
+              "description": "Returns if there is a previous page",
+              "args": [],
+              "type": { "kind": "SCALAR", "name": "Boolean", "ofType": null },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "numberOfElements",
+              "description": "Number of elements in current slice",
+              "args": [],
+              "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "hasContent",
+              "description": "Returns whether the page has content at all",
+              "args": [],
+              "type": { "kind": "SCALAR", "name": "Boolean", "ofType": null },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "number",
+              "description": "The number of the current page",
+              "args": [],
+              "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "TenantWhereInput",
+          "description": "Filter for apis",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "id",
+              "description": "Filter by id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TextComparison",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "name",
+              "description": "Filter by api name",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TextComparison",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "createdAt",
+              "description": "Filter by creation time",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TimeComparison",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "updatedAt",
+              "description": "Filter by update time",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TimeComparison",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "AND",
+              "description": "Additonal AND Filters",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "TenantWhereInput",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "OR",
+              "description": "Additional OR Filters",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "TenantWhereInput",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "NOT",
+              "description": "Additional NOT Filters",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "TenantWhereInput",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            }
+          ],
           "interfaces": null,
           "enumValues": null,
           "possibleTypes": null
@@ -3044,6 +3841,26 @@
           "fields": null,
           "inputFields": [
             {
+              "name": "appId",
+              "description": "The tenant this api belongs to",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "id",
+              "description": "The unique identifier for the api. Cannot be changed",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              },
+              "defaultValue": null
+            },
+            {
               "name": "name",
               "description": "The name of the api",
               "type": { "kind": "SCALAR", "name": "String", "ofType": null },
@@ -3064,6 +3881,18 @@
             {
               "name": "active",
               "description": "Whether the api has been activated",
+              "type": { "kind": "SCALAR", "name": "Boolean", "ofType": null },
+              "defaultValue": null
+            },
+            {
+              "name": "addPermissions",
+              "description": "Whether permissions should be added to the token",
+              "type": { "kind": "SCALAR", "name": "Boolean", "ofType": null },
+              "defaultValue": null
+            },
+            {
+              "name": "addRoles",
+              "description": "Whether roles should be added to the token",
               "type": { "kind": "SCALAR", "name": "Boolean", "ofType": null },
               "defaultValue": null
             }
@@ -3150,6 +3979,23 @@
             {
               "name": "name",
               "description": "The name of the role",
+              "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "UpdateTenantInput",
+          "description": "",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "name",
+              "description": "The name of the api",
               "type": { "kind": "SCALAR", "name": "String", "ofType": null },
               "defaultValue": null
             }
@@ -3250,13 +4096,17 @@
             },
             {
               "name": "email",
-              "description": "The email address for the suer",
+              "description": "The email address for the user",
               "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
-              },
+              "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "username",
+              "description": "The username for the user",
+              "args": [],
+              "type": { "kind": "SCALAR", "name": "String", "ofType": null },
               "isDeprecated": false,
               "deprecationReason": null
             },
@@ -3301,6 +4151,14 @@
               "deprecationReason": null
             },
             {
+              "name": "uuid",
+              "description": "Unique identifier for the user",
+              "args": [],
+              "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "roles",
               "description": "The roles the user has been assigned",
               "args": [],
@@ -3313,22 +4171,10 @@
               "deprecationReason": null
             },
             {
-              "name": "permissions",
-              "description": "Permissions for the user",
+              "name": "tenant",
+              "description": "The tenant for the user",
               "args": [],
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                }
-              },
+              "type": { "kind": "OBJECT", "name": "Tenant", "ofType": null },
               "isDeprecated": false,
               "deprecationReason": null
             }
@@ -3446,17 +4292,72 @@
           "possibleTypes": null
         },
         {
+          "kind": "OBJECT",
+          "name": "UserRolesResponse",
+          "description": "Role assignment response",
+          "fields": [
+            {
+              "name": "user",
+              "description": "The user that this affects",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": { "kind": "OBJECT", "name": "User", "ofType": null }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "added",
+              "description": "The roles that were added",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "OBJECT", "name": "Role", "ofType": null }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "removed",
+              "description": "The roles that were removed",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "OBJECT", "name": "Role", "ofType": null }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
           "kind": "INPUT_OBJECT",
           "name": "UserWhereInput",
           "description": "Filters for user model",
           "fields": null,
           "inputFields": [
             {
-              "name": "api",
-              "description": "Filter by api",
+              "name": "tenant",
+              "description": "Filter by tenant",
               "type": {
                 "kind": "INPUT_OBJECT",
-                "name": "ApiWhereInput",
+                "name": "TenantWhereInput",
                 "ofType": null
               },
               "defaultValue": null
@@ -3514,6 +4415,16 @@
             {
               "name": "name",
               "description": "Filter by the name of the user",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TextComparison",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "username",
+              "description": "Filter by the username",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "TextComparison",

@@ -9,11 +9,11 @@ var ReasonReact = require("reason-react/src/ReasonReact.js");
 var sidenav = Css.style(/* :: */[
       Css.height(Css.vh(100.0)),
       /* :: */[
-        Css.width(Css.px(160)),
+        Css.width(Css.rem(20.0)),
         /* :: */[
           Css.left(Css.zero),
           /* :: */[
-            Css.backgroundColor(Css.black),
+            Css.backgroundColor(Css.hex("222F3E")),
             /* :: */[
               Css.overflowX(Css.hidden),
               /* :: */[
@@ -31,13 +31,10 @@ var anchorBase = Css.style(/* :: */[
       /* :: */[
         Css.textDecoration(Css.none),
         /* :: */[
-          Css.fontSize(Css.rem(1.4)),
+          Css.color(Css.hex("F5F6FA")),
           /* :: */[
-            Css.color(Css.gray),
-            /* :: */[
-              Css.display(Css.block),
-              /* [] */0
-            ]
+            Css.display(Css.block),
+            /* [] */0
           ]
         ]
       ]

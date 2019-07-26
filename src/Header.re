@@ -4,21 +4,19 @@ module Styles = {
   let headerStyles =
     style([
       overflow(hidden),
-      backgroundColor(dimgray),
-      padding2(~v=px(20), ~h=px(10)),
+      backgroundColor(white),
+      padding2(~v=rem(3.0),~h=rem(1.5)),
+      boxShadow(~x=px(0),~y=px(0),~blur=rem(1.0),~spread=rem(1.0),rgba(53, 59, 72,0.1))
     ]);
 
   let headerAnchorStyle =
     style([
-      Css.float(`left),
-      color(black),
+      color(hex("576574")),
       textAlign(center),
-      padding(px(12)),
       lineHeight(px(25)),
       borderRadius(px(4)),
       textDecoration(none),
-      fontSize(px(25)),
-      fontStyle(oblique)
+      fontSize(rem(2.0))
     ]);
 };
 

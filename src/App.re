@@ -3,6 +3,7 @@ let component = ReasonReact.statelessComponent("App");
 
 module Styles = {
   open Css;
+  global("body", [fontFamily("helvetica"),color(hex("222F3E")),backgroundColor(hex("F5F6FA")),fontSize(rem(1.2)),margin(px(0)),padding(px(0))]);
   let displayFlex =
     style([
       display(`flex),

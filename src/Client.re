@@ -6,14 +6,8 @@ let httpLink =
   );
 
   let headerContextLink = ApolloLinks.createContextLink(() => {
-    "headers": {"x-admin-token": "secret"}
+    "headers": {"X-Auth-Admin-Secret": "secret"}
   });
 
 let instance =
   ReasonApollo.createApolloClient(~link=ApolloLinks.from([|headerContextLink,httpLink|]), ~cache=inMemoryCache, ());
-
-  let login = ()=>
-  Js.Promise.(
-      Axios.postData("http://localhost:8080/login",{"x-admin-token": "secret"})
-      |> then_((response) => resolve(Js.log(response##data)))
-      |> catch((error) => resolve(Js.log(error))));

@@ -14,6 +14,26 @@ function str(prim) {
 
 var component = ReasonReact.statelessComponent("App");
 
+Css.$$global("body", /* :: */[
+      Css.fontFamily("helvetica"),
+      /* :: */[
+        Css.color(Css.hex("222F3E")),
+        /* :: */[
+          Css.backgroundColor(Css.hex("F5F6FA")),
+          /* :: */[
+            Css.fontSize(Css.rem(1.2)),
+            /* :: */[
+              Css.margin(Css.px(0)),
+              /* :: */[
+                Css.padding(Css.px(0)),
+                /* [] */0
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]);
+
 var displayFlex = Css.style(/* :: */[
       Css.display(/* flex */-1010954439),
       /* :: */[

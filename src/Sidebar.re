@@ -3,9 +3,9 @@ module Styles = {
   let sidenav =
     style([
       height(vh(100.0)),
-      width(px(160)),
+      width(rem(20.0)),
       left(zero),
-      backgroundColor(black),
+      backgroundColor(hex("222F3E")),
       overflowX(hidden),
       paddingTop(px(20)),
     ]);
@@ -14,8 +14,7 @@ module Styles = {
     style([
       padding4(~top=px(6), ~right=px(8), ~bottom=px(6), ~left=px(16)),
       textDecoration(none),
-      fontSize(rem(1.4)),
-      color(gray),
+      color(hex("F5F6FA")),
       display(block),
     ]);
   let anchorHover = style([hover([color(white)])]);
