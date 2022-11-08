@@ -28,7 +28,7 @@
     "bs-css": "^9.0.1",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
-    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "^5.5.0",
     "react": "^16.2.0",
     "react-apollo": "^2.3.1",
     "react-dom": "^16.2.0",
@@ -42,7 +42,7 @@
     "bs-platform": "^5.0.6",
     "graphql_ppx": "^0.2.8",
     "webpack": "^4.0.1",
-    "webpack-cli": "^3.1.1",
+    "webpack-cli": "^3.3.12",
     "yarn": "^1.12.3"
   }
 }
